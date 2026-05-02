@@ -1,0 +1,184 @@
+🚨 KRITICKÁ ANALÝZA: "Conceptual Flat Earth Model"
+
+Narazil jsem na GitHub projekt, který prezentuje flat earth jako "conceptual model" s profesionálně vypadající vizualizací. Provedl jsem hlubokou technickou a vědeckou analýzu. Výsledky jsou alarmující. 🧵
+
+═══════════════════════════════════════════
+
+🔬 VĚDECKÁ MANIPULACE:
+
+1️⃣ TERMINOLOGICKÝ KLAM
+"Conceptual model" vytváří false legitimitu - jako bych řekl "conceptual perpetual motion machine". Projekt používá NASA data (DE405 ephemeris), VSOP87 planetary theory a Meeus algoritmů...
+
+...ale vkládá je do geometrie, která nemůže vysvětlit:
+❌ Časová pásma (nemohou všechna existovat na disku)
+❌ Satelitní orbity (které projekt ironicky simuluje!)
+❌ Gravitaci (kam by spadaly objekty?)
+❌ Foucaultovo kyvadlo
+❌ Cirkapolární hvězdné stopy
+
+2️⃣ MATEMATICKÝ TRIK
+Projekt tvrdí "geometrickou ekvivalenci" FE ↔ Globe:
+"Dome height = Sphere radius, proto stejné elevace"
+
+➡️ To je TAUTOLOGIE! Nastavil parametry tak, aby seděly - není to důkaz fyziky.
+➡️ Cherry-picking: funguje jen pro úhly z 1 bodu, ignoruje horizontální vzdálenosti
+➡️ Žádná gravitace v modelu (protože by vše spadlo na pól nebo atmosféra unikla)
+
+3️⃣ SATELITY - VLASTNÍ GÓL 🛰️
+Projekt simuluje ISS, Hubble, Starlink pomocí Keplerových orbit.
+TLE data (Two-Line Elements) fungují JEN na sféře!
+
+Logická past:
+IF satelity obíhají (vidíme je)
+AND projekt počítá pozice správně pomocí sférické fyziky
+THEN Země MUSÍ být sféra 🌍
+
+4️⃣ UKRADENÁ NASA DATA
+44 solar eclipses (2021-2040) od Fred Espenak (NASA)
+- Vypočítáno pro SFÉRICKOU Zemi
+- S Newtonovou gravitací
+- S relativistickými korekcemi
+
+Projekt je vezme, přemapuje na FE a tvrdí "funguje na obou modelech".
+❌ Saros cyklus vyžaduje 3D gravitaci Slunce-Země-Měsíc
+❌ FE nemá mechanismus pro správný timing zatmění
+
+═══════════════════════════════════════════
+
+👥 SOCIÁLNÍ MANIPULACE:
+
+🎓 FAKE AKADEMICKÝ TÓN
+Credits citují: NASA, Utrecht University, Jean Meeus...
+➡️ Žádný z těchto vědců NEPODPORUJE flat earth!
+➡️ Jejich práce je ZNEUŽITA
+
+🌍 18 JAZYKŮ = GLOBÁLNÍ KAMPAŇ
+EN·CZ·ES·FR·DE·IT·PT·PL·NL·SK·RU·AR·HE·ZH·JA·KO·TH·HI
+
+➡️ Arabština, Hebrejština, Čínština = miliardy lidí
+➡️ RTL support (AR/HE) ukazuje ZÁMĚR, ne hobby
+➡️ Cílení non-anglických komunit (méně debunků)
+
+🕸️ ORGANIZOVANÝ NETWORK
+Link groups: "Globebusters", "Aether Cosmology", Discord, Clubhouse
+➡️ Není to solitér, je to HNUTÍ
+
+═══════════════════════════════════════════
+
+💻 SOFTWAROVÁ ARCHITEKTURA - TECHNICKÝ ROZBOR:
+
+Paradox: Sofistikovaná implementace špatné myšlenky
+
+✅ POZITIVA:
+- Modularizace (core/render/ui)
+- Event-driven architecture
+- 5 ephemeris pipelines
+- WebGL rendering (Three.js)
+- PWA support
+
+🔴 KRITICKÁ PORUŠENÍ:
+
+1️⃣ BUILD ARTIFACTS V GITU
+Komentář tvrdí: "js-min/ is gitignored"
+Reality: js-min/ NENÍ v .gitignore → tracknuto!
+➡️ 100+ souborů v každém commitu
+➡️ Merge hell
+➡️ AMATÉRSKÁ CHYBA (junior level)
+
+2️⃣ SINGLE-BRANCH WORKFLOW
+❌ Žádné feature branches
+❌ Žádné pull requests / code review
+❌ Žádný CI/CD (.github/workflows/ neexistuje)
+
+Profesionální projekty:
+✅ React: min 2 reviews, 30+ CI checks
+✅ Vue: Git Flow s dev + main
+✅ Three.js: Feature branches + Lighthouse CI
+
+3️⃣ DRY VIOLATIONS
+~200 řádků DUPLICITNÍHO kódu:
+- projectStar() vs projectSatellite() - 90% stejné
+- Sun/Moon/Planet projection - copy-paste 5×
+
+➡️ Bug = oprava na 5 místech
+➡️ 80% redundantního kódu
+
+4️⃣ SOLID VIOLATIONS
+app.js = 1755 ŘÁDKŮ s 9+ odpovědnostmi:
+- State management
+- Ephemeris calculations
+- Transformations
+- Projections
+- Cache
+- ...
+
+➡️ Single Responsibility Principle: ZNIČEN
+➡️ Monolitní state objekt (100+ properties)
+
+5️⃣ ZERO TESTŮ
+❌ Žádné unit tests
+❌ Žádné integration tests
+❌ Žádný test coverage
+
+Pro 1755řádkovou třídu s astronomickými výpočty je to NEUDRŽITELNÉ.
+
+═══════════════════════════════════════════
+
+📊 HODNOCENÍ:
+
+🔴 KRITICKÁ ZÁVAŽNOST:
+- Vědecky nevalidní (porušuje observables)
+- Matematicky klamavý (circular reasoning)
+- Eticky problematický (zneužití NASA dat)
+- Git workflow (build artifacts tracked)
+- Single-branch no-PR
+
+🟡 ZÁVAŽNÁ:
+- 1755-line monster class
+- 200+ řádků duplicate code
+- Zero tests
+
+SCORES:
+DRY: 3/10 🔴
+SOLID: 6/10 🟡
+Best Practices: 2/10 🔴
+Vědecká validita: 0/10 🔴
+
+═══════════════════════════════════════════
+
+🎯 ZÁVĚR:
+
+Tento projekt je PSEUDOVĚDECKÁ DEZINFORMAČNÍ APLIKACE maskovaná jako "conceptual model".
+
+✅ Technicky funkční (WebGL funguje)
+❌ Vědecky nevalidní (ignoruje fyziku)
+❌ Profesionálně neudržitelný (amatérské chyby)
+
+⚠️ VAROVÁNÍ PRO UŽIVATELE:
+Projekt vypadá vědecky, ale je to KLAM. Mixuje legitimní NASA data s fyzikálně nemožnou geometrií.
+
+✅ POUŽIJ RADĚJI:
+- Stellarium (skutečný astronomický software)
+- Celestia (3D space simulation)
+- Google Earth (pravdivé zobrazení)
+
+💡 PRO VÝVOJÁŘE:
+- Ukaž to jako příklad ŠPATNÉHO workflow
+- NIKDY netracknuj build artifacts
+- Feature branches nejsou luxus
+- 1755řádková třída = red flag
+- Testy nejsou optional
+
+═══════════════════════════════════════════
+
+🔗 Kompletní analýza (HTML soubor): [přiložit link]
+
+📢 SDÍLEJ aby lidé věděli co se skrývá za "conceptual model"
+
+#CriticalThinking #SoftwareEngineering #Science #FlatEarth #Debunked #Pseudoscience #CodeReview #BestPractices #NASA #GitHub
+
+---
+
+P.S.: Ironie? Projekt simuluje satelity pomocí sférické fyziky, cituje NASA... a tvrdí že Země je placka. 🤦‍♂️
+
+Máte otázky? Píšte v komentářích, rád rozvedu kterýkoliv bod z analýzy.

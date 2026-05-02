@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kritická analýza projektu Conceptual Flat Earth Model - technické a vědecké problémy">
+    <title>🚨 Analýza: Flat Earth "Conceptual Model" - Vědecký a Technický Rozbor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, sans-serif;
+            line-height: 1.7;
+            color: #1a1a1a;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        .alert {
+            background: #fef2f2;
+            border-left: 4px solid #dc2626;
+            padding: 20px;
+            margin: 30px;
+            border-radius: 8px;
+        }
+
+        .alert strong {
+            color: #dc2626;
+            font-size: 1.1em;
+        }
+
+        section {
+            padding: 30px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        h2 {
+            color: #1f2937;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        h3 {
+            color: #374151;
+            font-size: 1.3em;
+            margin: 25px 0 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .emoji {
+            font-style: normal;
+        }
+
+        ul, ol {
+            margin-left: 25px;
+            margin-top: 10px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        code {
+            background: #f3f4f6;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #dc2626;
+        }
+
+        .code-block {
+            background: #1f2937;
+            color: #e5e7eb;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .severity-critical {
+            color: #dc2626;
+            font-weight: bold;
+        }
+
+        .severity-high {
+            color: #ea580c;
+            font-weight: bold;
+        }
+
+        .severity-medium {
+            color: #f59e0b;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background: #f9fafb;
+        }
+
+        .highlight-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .success-box {
+            background: #dcfce7;
+            border-left: 4px solid #16a34a;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        .danger-box {
+            background: #fee2e2;
+            border-left: 4px solid #dc2626;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        footer {
+            background: #f9fafb;
+            padding: 30px;
+            text-align: center;
+            color: #6b7280;
+            font-size: 0.9em;
+        }
+
+        .score {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin: 5px;
+        }
+
+        .score-low {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .score-mid {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            header h1 {
+                font-size: 1.6em;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            table {
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚨 KRITICKÁ ANALÝZA</h1>
+            <p>Projekt "Conceptual Flat Earth Model"</p>
+            <p style="font-size: 0.9em; margin-top: 10px; opacity: 0.8;">Vědecký, fyzikální a softwarově-architektonický rozbor</p>
+        </header>
+
+        <div class="alert">
+            <strong>⚠️ VAROVÁNÍ:</strong> Tento projekt je pseudovědecká dezinformační aplikace maskovaná jako "conceptual model", kombinující sofistikované astronomické výpočty s fyzikálně nemožným modelem plochého světa.
+        </div>
+
+        <section id="executive-summary">
+            <h2>📋 Exekutivní shrnutí</h2>
+            <p>Softwarová architektura zrcadlí ideologickou podstatu: profesionální ephemeris pipelines zakomponované do fundamentálně vadného konceptu.</p>
+
+            <div class="highlight-box">
+                <strong>Klíčové zjištění:</strong>
+                <ul>
+                    <li>Vědecky nevalidní model prezentovaný jako legitimní alternativa</li>
+                    <li>Zneužití NASA dat (DE405), VSOP87 a dalších vědeckých zdrojů</li>
+                    <li>Kritická porušení softwarových best practices</li>
+                    <li>Část organizované dezinformační infrastruktury (18 jazyků)</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="physical-manipulation">
+            <h2>🔬 Fyzikální a vědecká manipulace</h2>
+
+            <h3><span class="emoji">🎭</span> 1. Záměrná terminologická manipulace</h3>
+            <p>Slovo <strong>"conceptual model"</strong> vytváří false legitimitu:</p>
+            <ul>
+                <li>✅ Legitimní: "conceptual model of atomic structure" (výuková simplifikace)</li>
+                <li>❌ Tady: "conceptual flat earth" = eufemismus pro <strong>fyzikálně nemožné</strong></li>
+            </ul>
+
+            <div class="code-block">// constants.js
+// Unitless constants for the FE dome model.
+// All distances are expressed as multiples of
+// the flat-earth disc radius (FE_RADIUS = 1)</div>
+
+            <p>Prezentace jako "unitless ratios" <strong>záměrně zastírá</strong>, že žádný fyzikální model nemůže vysvětlit:</p>
+            <ul>
+                <li>Geodetická měření</li>
+                <li>Časová pásma (nemohou všechna existovat současně na disku)</li>
+                <li>Satelitní orbity (které projekt ironicky simuluje!)</li>
+                <li>Cirkapolární hvězdné stopy</li>
+                <li>Foucaultovo kyvadlo</li>
+                <li>Coriolisova síla</li>
+            </ul>
+
+            <h3><span class="emoji">🔀</span> 2. Mixování vědy a pseudovědy</h3>
+
+            <div class="success-box">
+                <strong>Legitimní vědecké výpočty (správně implementované):</strong>
+                <ul>
+                    <li>DE405 (NASA JPL ephemeris)</li>
+                    <li>VSOP87 (Bretagnon & Francou planetary theory)</li>
+                    <li>Meeus "Astronomical Algorithms"</li>
+                    <li>Ptolemaic deferent+epicycle (historický)</li>
+                </ul>
+            </div>
+
+            <div class="danger-box">
+                <strong>→ Pak je vkládá do fyzikálně nemožné geometrie:</strong>
+                <div class="code-block">// feGeometry.js
+function celestLatLongToVaultCoord(lat, lonCelest,
+                                   height, feRadius)
+// Projekce správných pozic planet
+// na VYMYŠLENOU kupoli</div>
+            </div>
+
+            <p><strong>Analogie:</strong></p>
+            <ul>
+                <li>Vzít GPS souřadnice</li>
+                <li>Zpracovat je přes správné algoritmy</li>
+                <li>Vykreslit na mapě se zaměněným severem a jihem</li>
+                <li>Tvrdit "je to jen jiná projekce"</li>
+            </ul>
+
+            <h3><span class="emoji">📐</span> 3. "Geometrická ekvivalence" - matematický klam</h3>
+
+            <div class="code-block">| Flat / Planar | = | Globe / Spherical |
+| Plane diameter | = | Sphere circumference = 128,300 li |
+| Dome height | = | Sphere radius = 20,419.45 li |
+
+"Proof": atan(H/D) = π/2 − z = ε_globe
+         ∴ identical elevation</div>
+
+            <h4>Proč je to KLAM:</h4>
+            <ol>
+                <li><strong>Cherry-picking pozorování</strong> - funguje POUZE pro elevační úhly z jednoho bodu</li>
+                <li><strong>Ignoruje:</strong>
+                    <ul>
+                        <li>Horizontální vzdálenosti (fyzicky měřitelné)</li>
+                        <li>Různé hvězdné oblohy sever/jih</li>
+                        <li>Flight paths (budou různě dlouhé na disku)</li>
+                    </ul>
+                </li>
+                <li><strong>Matematická manipulace:</strong> Rovnice je <em>tautologie</em> pro nastavené parametry, ne důkaz fyziky</li>
+                <li><strong>Ignorování gravitace:</strong> Projekt nemá gravitační fyziku, protože by spadlo vše na pól nebo atmosféra unikla</li>
+            </ol>
+
+            <h3><span class="emoji">🛰️</span> 4. Satelity - ironický vlastní gól</h3>
+
+            <div class="code-block">// satellites.js
+const projectSatellite = (sat) => {
+  const sub = satelliteSubPoint(sat, utcDate);
+  // Two-body Kepler elements - FUNGUJE JEN NA KOULI!
+}</div>
+
+            <p>Projekt simuluje: ISS, Hubble, Tiangong, Starlink, JWST</p>
+            <p>Používá <strong>TLE (Two-Line Elements)</strong> z CelesTrak</p>
+
+            <div class="danger-box">
+                <strong>Logická past:</strong><br>
+                IF satelity obíhají (což dělají, vidíme je)<br>
+                AND projekt správně vypočítává jejich pozice pomocí <em>sférické fyziky</em><br>
+                THEN Země MUSÍ být sféra
+            </div>
+
+            <h3><span class="emoji">🌑</span> 5. Eclipse demos - ukradená věda</h3>
+
+            <p>Projekt obsahuje: <strong>44 solar eclipses (2021–2040) od Fred Espenak (NASA)</strong></p>
+
+            <p>Espenak je vypočítal pomocí:</p>
+            <ul>
+                <li>Sférické Země</li>
+                <li>Newtonovské gravitace</li>
+                <li>Relativistických korekcí</li>
+            </ul>
+
+            <p>Projekt:</p>
+            <ol>
+                <li>Vezme NASA data</li>
+                <li>Přemapuje na FE geometrii</li>
+                <li>Tvrdí "funguje to na obou modelech"</li>
+            </ol>
+
+            <p><strong>Reality check:</strong> Saros cyklus vyžaduje 3D gravitaci Měsíce-Země-Slunce. FE nemá mechanismus pro synchronizaci lunárních fází nebo správný timing zatmění.</p>
+        </section>
+
+        <section id="social-manipulation">
+            <h2>👥 Sociální a etická manipulace</h2>
+
+            <h3><span class="emoji">🎓</span> 1. Fake akademický tón</h3>
+            <div class="highlight-box">
+                <strong>Credits (z about.md):</strong>
+                <ul>
+                    <li>Fred Espenak (NASA GSFC retired)</li>
+                    <li>R.H. van Gent (Utrecht University)</li>
+                    <li>Bretagnon & Francou (VSOP87)</li>
+                    <li>Jean Meeus (Astronomical Algorithms)</li>
+                </ul>
+            </div>
+
+            <div class="danger-box">
+                <strong>Problém:</strong> Citování skutečných vědců vytváří autoritu, ale:
+                <ul>
+                    <li>Žádný z nich nepodporuje flat earth</li>
+                    <li>Jejich práce je <strong>zneužita</strong></li>
+                    <li>Je to jako citovat Einsteina v článku popírajícím relativitu</li>
+                </ul>
+            </div>
+
+            <h3><span class="emoji">🌍</span> 2. 18 jazyků - globální dezinformační kampaň</h3>
+            <p><code>EN · CZ · ES · FR · DE · IT · PT · PL · NL · SK · RU · AR · HE · ZH · JA · KO · TH · HI</code></p>
+
+            <p><strong>Taktika:</strong></p>
+            <ul>
+                <li>Cílení non-anglických komunit (nižší přístup k debunkingům)</li>
+                <li>Arabština/Hebrejština/Čínština = populace miliard</li>
+                <li>RTL support (AR/HE) ukazuje záměr, ne hobby</li>
+            </ul>
+
+            <h3><span class="emoji">🕸️</span> 3. Organizovaný network</h3>
+            <p><strong>External Link Groups:</strong></p>
+            <ul>
+                <li>"Globebusters" = known conspiracy group</li>
+                <li>"Aether Cosmology" = pseudovědecká terminologie</li>
+                <li>Discord, Clubhouse, Twitter Community</li>
+            </ul>
+            <p>→ Není to solitér, je to <strong>organizované hnutí</strong></p>
+        </section>
+
+        <section id="software-architecture">
+            <h2>💻 Softwarová architektura - Technický rozbor</h2>
+
+            <h3><span class="emoji">⚖️</span> Paradox: Sofistikovaná implementace špatné myšlenky</h3>
+
+            <div class="success-box">
+                <strong>✅ Pozitiva (technická kvalita):</strong>
+                <ul>
+                    <li>Modularizace (js/core, js/render, js/ui)</li>
+                    <li>Event-driven architecture</li>
+                    <li>5 ephemeris pipelines</li>
+                    <li>WebGL rendering (Three.js)</li>
+                    <li>PWA support + Service Worker</li>
+                    <li>I18n (18 jazyků)</li>
+                </ul>
+            </div>
+
+            <h3 class="severity-critical"><span class="emoji">🔴</span> 1. Build Artifacts v Gitu</h3>
+            <div class="code-block"># .gitignore - CHYBÍ:
+js-min/  ❌
+
+# build-min.mjs L12 tvrdí:
+"js-min/ is gitignored"  # LŽE!</div>
+
+            <p><strong>Důsledky:</strong></p>
+            <ul>
+                <li>100+ generovaných souborů v každém commitu</li>
+                <li>Merge konflikty zadarmo</li>
+                <li>Balónující repo (každá změna = 2× diff)</li>
+                <li><span class="severity-critical">Amatérská chyba</span> (junior developer level)</li>
+            </ul>
+
+            <h3 class="severity-critical"><span class="emoji">🔴</span> 2. Single-Branch Workflow</h3>
+            <ul>
+                <li>❌ Žádné feature branches</li>
+                <li>❌ Žádné pull requests</li>
+                <li>❌ Žádná code review</li>
+                <li>❌ Žádný CI/CD (<code>.github/workflows/</code> neexistuje)</li>
+            </ul>
+
+            <div class="danger-box">
+                <strong>Scénář:</strong><br>
+                Master = Production = YOLO<br>
+                Developer A: [commits 500-line change]<br>
+                Developer B: [commits simultaneously] → CONFLICT<br>
+                Production: [crashes] → "Ehm, jak rollbacknout?"
+            </div>
+
+            <p><strong>Profesionální projekty:</strong></p>
+            <ul>
+                <li>React: min. 2 reviews, 30+ CI checks</li>
+                <li>Vue: Git Flow s dev + main</li>
+                <li>Three.js: Feature branches + Lighthouse CI</li>
+            </ul>
+
+            <h3 class="severity-critical"><span class="emoji">🔴</span> 3. DRY Violations (Don't Repeat Yourself)</h3>
+            <p><strong>Duplicitní projekční kód ~200 řádků:</strong></p>
+            <div class="code-block">// app.js - TÉMĚŘ IDENTICKÝ KÓD 5×:
+projectStar()      // L1314-1358 (44 řádků)
+projectSatellite() // L1395-1428 (34 řádků)
+Sun projection     // L852-899
+Moon projection    // L901-965
+Planet projection  // L1239-1291
+
+// Každý má:
+const celestCoord = equatorialToCelestCoord({ra, dec});
+const vaultCoord = _bodyVault(...);
+// ... 40 řádků identické logiky</div>
+
+            <p><strong>Důsledky:</strong> Bug v projekci = oprava na 5 místech, 80% copy-paste</p>
+
+            <h3 class="severity-high"><span class="emoji">🟡</span> 4. SOLID Violations</h3>
+
+            <h4>Single Responsibility Principle:</h4>
+            <div class="code-block">// app.js = 1755 ŘÁDKŮ, 9+ odpovědností:
+class FeModel {
+  // 1. State management
+  // 2. Ephemeris calculations
+  // 3. Coordinate transformations
+  // 4. Sun/Moon/Planet/Star/Satellite projection
+  // 5. Cache management
+  // 6. Analemma accumulation
+  // 7. Eclipse detection
+  // 8. GP path generation
+  // 9. Tracker info building
+}</div>
+
+            <h4>Interface Segregation:</h4>
+            <p>Monolitní state objekt s <strong>100+ properties</strong></p>
+            <p>Každá komponenta potřebuje 5-10 polí, ale pracuje s celým objektem.</p>
+
+            <h3 class="severity-high"><span class="emoji">🟡</span> 5. Chybějící testy</h3>
+            <ul>
+                <li>❌ Žádné unit testy</li>
+                <li>❌ Žádné integration testy</li>
+                <li>❌ Žádný test coverage</li>
+                <li>❌ Žádný linting enforcement</li>
+            </ul>
+            <p>Pro projekt s 1755řádkovou třídou a komplexními astronomickými výpočty je to <strong>neudržitelné</strong>.</p>
+        </section>
+
+        <section id="scores">
+            <h2>📊 Hodnocení</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Kategorie</th>
+                        <th>Problém</th>
+                        <th>Závažnost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Vědecká</td>
+                        <td>Flat earth jako "conceptual model"</td>
+                        <td class="severity-critical">🔴 Kritická</td>
+                    </tr>
+                    <tr>
+                        <td>Fyzikální</td>
+                        <td>Ignoruje gravitaci, čas. pásma, satelity</td>
+                        <td class="severity-critical">🔴 Kritická</td>
+                    </tr>
+                    <tr>
+                        <td>Matematická</td>
+                        <td>Circular reasoning jako "důkaz"</td>
+                        <td class="severity-critical">🔴 Kritická</td>
+                    </tr>
+                    <tr>
+                        <td>Etická</td>
+                        <td>Zneužití NASA dat pro dezinformace</td>
+                        <td class="severity-critical">🔴 Kritická</td>
+                    </tr>
+                    <tr>
+                        <td>Git</td>
+                        <td>Build artifacts tracked</td>
+                        <td class="severity-critical">🔴 Kritická</td>
+                    </tr>
+                    <tr>
+                        <td>Workflow</td>
+                        <td>Single-branch no-PR</td>
+                        <td class="severity-critical">🔴 Kritická</td>
+                    </tr>
+                    <tr>
+                        <td>Architektura</td>
+                        <td>1755-line class</td>
+                        <td class="severity-high">🟡 Závažná</td>
+                    </tr>
+                    <tr>
+                        <td>DRY</td>
+                        <td>200+ řádků duplicate kódu</td>
+                        <td class="severity-high">🟡 Závažná</td>
+                    </tr>
+                    <tr>
+                        <td>Testing</td>
+                        <td>Zero tests</td>
+                        <td class="severity-high">🟡 Závažná</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <h3>Celkové hodnocení:</h3>
+                <div class="score score-low">DRY: 3/10</div>
+                <div class="score score-low">SOLID: 6/10</div>
+                <div class="score score-low">Best Practices: 2/10</div>
+                <div class="score score-low">Vědecká validita: 0/10</div>
+            </div>
+        </section>
+
+        <section id="conclusion">
+            <h2>🎯 Závěry a doporučení</h2>
+
+            <h3>Pro uživatele:</h3>
+            <div class="danger-box">
+                <strong>VAROVÁNÍ:</strong> Tento projekt je:
+                <ul>
+                    <li>❌ Vědecky nevalidní - porušuje Observable reality</li>
+                    <li>❌ Matematicky klamavý - "důkazy" jsou circular reasoning</li>
+                    <li>❌ Sociálně nebezpečný - část dezinformační infrastruktury</li>
+                    <li>⚠️ Technicky problematický - amatérské softwarové chyby</li>
+                </ul>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ Použij raději:</strong>
+                <ul>
+                    <li>Stellarium (skutečný astronomický software)</li>
+                    <li>Celestia (3D space simulation)</li>
+                    <li>Google Earth (pravdivé zobrazení planety)</li>
+                </ul>
+            </div>
+
+            <h3>Pro developery:</h3>
+            <p><strong>Co SI odnést (pozitiva):</strong></p>
+            <ul>
+                <li>✅ Event-driven architektura</li>
+                <li>✅ Modulární struktura</li>
+                <li>✅ WebGL rendering pipeline</li>
+            </ul>
+
+            <p><strong>Co NEOPAKOVAT (negativa):</strong></p>
+            <ul>
+                <li>❌ js-min/ v gitu → <code>.gitignore</code> existuje z důvodu</li>
+                <li>❌ Single branch → feature branches jsou standard od 2010</li>
+                <li>❌ 1755řádková třída → SRP není návrh</li>
+                <li>❌ 200 řádků duplicate code → refactor existuje</li>
+                <li>❌ Žádné testy → jak víš že to funguje?</li>
+            </ul>
+
+            <h3>TL;DR:</h3>
+            <div class="highlight-box">
+                Sofistikované astronomické výpočty zakomponované do <strong>fyzikálně nemožného modelu</strong>, s amatérskou softwarovou architekturou a kritickými git workflow chybami.
+                <br><br>
+                Projekt je <em>technicky funkční</em>, <strong>vědecky nevalidní</strong> a <em>profesionálně neudržitelný</em>.
+            </div>
+        </section>
+
+        <footer>
+            <p><strong>Dokument vytvořen:</strong> 2. května 2026</p>
+            <p>Kritická analýza GitHub projektu alanspaceaudits/conceptual_flat_earth_model</p>
+            <p style="margin-top: 15px; font-size: 0.85em;">
+                Pro vědeckou debatu o tvaru Země doporučuji:<br>
+                NASA, ESA, JAXA, a tisíce peer-reviewed studií z posledních 2000 let.
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
