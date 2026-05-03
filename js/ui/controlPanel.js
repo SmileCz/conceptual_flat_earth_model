@@ -2,7 +2,7 @@
 // FeModel state. No external framework — plain DOM.
 
 import { dateTimeToString, dateTimeToDate } from '../core/time.js';
-import { fmtDuFen, fmtLiBuFromLi, haversineLi, KM_PER_LI, R_LI } from '../core/units.js';
+import { fmtDuDecimal, fmtLiBuFromLi, haversineLi, KM_PER_LI, R_LI } from '../core/units.js';
 import { TIME_ORIGIN } from '../core/constants.js';
 import { findNextEclipses } from '../core/ephemeris.js';
 import { findNextSolarEclipseAfter } from '../core/solarEclipseSchedule.js';
@@ -1719,24 +1719,17 @@ function distanceCalcPanel(model) {
     slotDist.textContent =
       `${fmtLiBuFromLi(li)}  (${km.toFixed(2)} km)`;
     slotCa.textContent =
-      `${fmtDmsUnsigned(central)}  ·  ${fmtDuFen(central)}`;
+      `${fmtDmsUnsigned(central)}  ·  ${fmtDuDecimal(central)}`;
     slotIa.textContent =
-      `${fmtDmsUnsigned(inscribed)}  ·  ${fmtDuFen(inscribed)}`;
+      `${fmtDmsUnsigned(inscribed)}  ·  ${fmtDuDecimal(inscribed)}`;
   };
 
-  // Auto-fill P1 with the observer's position the first time the
-  // panel renders while all four inputs are still null. Subsequent
-  // edits stand on their own; the explicit "Use Obs → P1" button
-  // is the user-driven way to refresh.
-  const s0 = model.state;
-  const allNull = s0.DistCalcLat1 == null && s0.DistCalcLon1 == null
-               && s0.DistCalcLat2 == null && s0.DistCalcLon2 == null;
-  if (allNull) {
-    model.setState({
-      DistCalcLat1: s0.ObserverLat,
-      DistCalcLon1: s0.ObserverLong,
-    });
-  }
+  // (Auto-fill of P1 from the observer's position removed —
+  // it left a stale yellow pin at the original observer
+  // location when the user moved to a new spot, since the
+  // map-render path treats any non-null DistCalcLat1/Lon1 as
+  // an active pair to draw. The "Use Obs → P1" button is the
+  // explicit way to seed P1 now; the panel starts empty.)
 
   model.addEventListener('update', refresh);
   refresh();
@@ -1872,11 +1865,22 @@ export function buildControlPanel(host, model, demos) {
       <span class="info-slot info-dist" data-k="dist" hidden></span>
       <span class="info-actions" data-k="actions"></span>
     </div>
+    <div class="info-row info-row-du" data-k="durow" hidden>
+      <span class="info-slot" data-k="latDu">—</span>
+      <span class="info-slot" data-k="lonDu">—</span>
+      <span class="info-slot" data-k="elDu">—</span>
+      <span class="info-slot" data-k="azDu">—</span>
+    </div>
   `;
   const slotLat   = infoBar.querySelector('[data-k="lat"]');
   const slotLon   = infoBar.querySelector('[data-k="lon"]');
   const slotEl    = infoBar.querySelector('[data-k="el"]');
   const slotAz    = infoBar.querySelector('[data-k="az"]');
+  const rowDu     = infoBar.querySelector('[data-k="durow"]');
+  const slotLatDu = infoBar.querySelector('[data-k="latDu"]');
+  const slotLonDu = infoBar.querySelector('[data-k="lonDu"]');
+  const slotElDu  = infoBar.querySelector('[data-k="elDu"]');
+  const slotAzDu  = infoBar.querySelector('[data-k="azDu"]');
   const slotMel   = infoBar.querySelector('[data-k="mel"]');
   const slotMaz   = infoBar.querySelector('[data-k="maz"]');
   const slotEph   = infoBar.querySelector('[data-k="eph"]');
@@ -1903,6 +1907,14 @@ export function buildControlPanel(host, model, demos) {
     slotLon.textContent = fmtLon(s.ObserverLong);
     slotEl.textContent  = `El ${fmtSignedDeg(s.CameraHeight || 0)}`;
     slotAz.textContent  = `Az ${(s.ObserverHeading || 0).toFixed(2)}°`;
+    const chineseOn = !!s.ShowChineseDu;
+    rowDu.hidden = !chineseOn;
+    if (chineseOn) {
+      slotLatDu.textContent = `Lat ${fmtDuDecimal(s.ObserverLat, true)}`;
+      slotLonDu.textContent = `Lon ${fmtDuDecimal(s.ObserverLong, true)}`;
+      slotElDu.textContent  = `El ${fmtDuDecimal(s.CameraHeight || 0, true)}`;
+      slotAzDu.textContent  = `Az ${fmtDuDecimal(s.ObserverHeading || 0)}`;
+    }
     slotMel.textContent = Number.isFinite(s.MouseElevation)
       ? `Mouse El: ${fmtSignedDeg(s.MouseElevation)}`
       : 'Mouse El: —';
@@ -2568,20 +2580,27 @@ export function buildControlPanel(host, model, demos) {
   refreshLangBtn();
 
   // World-model cycle: FE (flat disc, AE) → GE (globe sphere) → DP
-  // (flat disc, dual-pole AE) → FE. State key `WorldModel`
-  // ('fe' / 'ge' / 'dp'). Button face displays the *current* model.
-  // Stacked directly under the grids toggle (▦).
+  // (flat disc, dual-pole AE) → CP (flat disc, Canters Polyconic
+  // W20 centred on observer's lat/lon defaults) → FE. State key
+  // `WorldModel` ('fe' / 'ge' / 'dp' / 'cp'). Button face shows
+  // the current model. Stacked under the grids toggle (▦).
   const btnWorld = document.createElement('button');
   btnWorld.className = 'time-btn world-btn';
   btnWorld.type = 'button';
   btnWorld.setAttribute('aria-pressed', 'true');
   const refreshWorldBtn = () => {
     const wm = model.state.WorldModel;
-    btnWorld.textContent = wm === 'ge' ? 'GE' : wm === 'dp' ? 'DP' : 'FE';
+    btnWorld.textContent = wm === 'ge' ? 'GE'
+                         : wm === 'dp' ? 'DP'
+                         : wm === 'cp' ? 'CP'
+                         : 'FE';
   };
   btnWorld.addEventListener('click', () => {
     const cur = model.state.WorldModel;
-    const next = cur === 'fe' ? 'ge' : cur === 'ge' ? 'dp' : 'fe';
+    const next = cur === 'fe' ? 'ge'
+               : cur === 'ge' ? 'dp'
+               : cur === 'dp' ? 'cp'
+               : 'fe';
     model.setState({ WorldModel: next });
   });
   model.addEventListener('update', refreshWorldBtn);
@@ -3592,7 +3611,7 @@ export function buildTrackerHud(trackerEl, model) {
       const _chineseOn = !!model.state.ShowChineseDu;
       const _withDu = (deg, dmsStr, signed = false) =>
         _chineseOn && Number.isFinite(deg)
-          ? `${dmsStr}  ·  ${fmtDuFen(deg, signed)}`
+          ? `${dmsStr}  ·  ${fmtDuDecimal(deg, signed)}`
           : dmsStr;
       rec.azel.textContent  = `az ${_withDu(info.azimuth, fmtDmsDegAz(info.azimuth))}   el ${_withDu(info.elevation, fmtDmsDegEl(info.elevation), true)}`;
       // Refraction lift in arcminutes when a formula is active and
