@@ -8,9 +8,11 @@ export const Limit1  = (x) => (x < -1 ? -1 : x > 1 ? 1 : x);
 export const Limit01 = (x) => (x < 0 ? 0 : x > 1 ? 1 : x);
 export const Clamp   = (x, lo, hi) => (x < lo ? lo : x > hi ? hi : x);
 
-// Wrap x into [0, max) (for positive x) or [-max, 0) (for negative x).
+// Wrap x into [0, max).
+// Edge-case fix: when |x| is an exact multiple of max the inner modulo is 0;
+// without the guard the negative-branch returns `max` instead of 0.
 export function ToRange(x, max) {
   let v = Math.abs(x) % max;
-  if (x < 0) v = max - v;
+  if (x < 0 && v !== 0) v = max - v;
   return v;
 }

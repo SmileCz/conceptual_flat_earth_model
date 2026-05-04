@@ -5,6 +5,8 @@ node_modules/
 .vscode/
 .idea/
 
+js-min/
+
 # Capacitor
 dist/
 android/.gradle/
